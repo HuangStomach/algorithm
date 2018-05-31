@@ -18,15 +18,15 @@ public class BinarySearch {
 
     public static void main (String[] args) {
         int[] whitelist = new int[1024];
-        for(int i = 0; i < whitelist.length; i++) {   
-            whitelist[i] = i + 1; 
+        for(int i = 1; i <= whitelist.length; i++) {   
+            whitelist[i] = i; 
         }
 
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
-            if (rank(key, whitelist) < 0) {
-                StdOut.println(key);
-            }
+            int index = rank(key, whitelist);
+            if (index < 0) StdOut.println("值[" + key + "]没有找到");
+            else StdOut.println("值[" + key + "]在索引[" + index + "]处");
         }
     }
 

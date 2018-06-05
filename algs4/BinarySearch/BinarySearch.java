@@ -5,20 +5,22 @@ import edu.princeton.cs.algs4.StdIn;
 public class BinarySearch {
 
     public static int rank(int key, int[] a) {
-        int low = 0;
-        int high = a.length - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            if (key < a[mid]) high = mid - 1;
-            else if (key > a[mid]) low = mid + 1;
-            else return mid;
-        }
-        return -1;
+        return rank(key, a, 0, a.length - 1, 1);
     }
 
-    public static void main (String[] args) {
+    public static int rank(int key, int[] a, int low, int high, int deep) {
+        if (low > high) return -1;
+        StdOut.println("深度为" + deep);
+
+        int mid = (low + high) / 2;
+        if (key < a[mid]) return rank(key, a, low, mid - 1, ++deep);
+        else if (key > a[mid]) return rank(key, a, mid + 1, high, ++deep);
+        else return mid;
+    }
+
+    public static void main(String[] args) {
         int[] whitelist = new int[1024];
-        for(int i = 1; i <= whitelist.length; i++) {   
+        for(int i = 0; i <= whitelist.length - 1; i++) {   
             whitelist[i] = i; 
         }
 

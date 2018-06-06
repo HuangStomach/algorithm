@@ -1,4 +1,7 @@
 import java.util.Arrays;
+import java.util.Random;
+import java.math.BigDecimal;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class Basic {
 
@@ -40,7 +43,6 @@ public class Basic {
 
     // 1.1.24
     public static int gcd(int p, int q) {
-        System.out.println(p + " " + q);
         if (p % q == 0) return q;
         return gcd(q, p % q);
     }
@@ -52,13 +54,62 @@ public class Basic {
         System.out.println(Basic.binomialDeep++);
         if (N == 0 && k == 0) return 1.0;
         if (N < 0 || k < 0) return 0.0;
-        if (Basic.binomials[N][k] > 0) return Basic.binomials[N][k];
+        if (Basic.binomials[N][k] > -1.0) return Basic.binomials[N][k];
         
         Basic.binomials[N][k] = (1.0 - p) * binomial(N - 1, k, p) + p * binomial(N - 1, k - 1, p);
         return Basic.binomials[N][k];
     }
 
-    public static void main (String[] args) {
+    // 1.1.30
+    public static boolean[][] coprime(int N) {
+        boolean[][] array = new boolean[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (i == 0 || j == 0) {
+                    array[i][j] = true;
+                    continue;
+                }
+                array[i][j] = gcd(i, j) == 1;
+            }
+        }
+        return array;
+    }
+    
+    // 1.1.35
+    public static double[] dice() {
+        int sides = 6;
+        double[] dist = new double[2 * sides + 1];
+        for (int i = 1; i <= sides; i++) {
+            for (int j = 1; j <= sides; j++) {
+                dist[i + j] += 1.0;
+            }
+        }
+        
+        for (int k = 2; k <= 2 * sides; k++) {
+            BigDecimal bg = new BigDecimal(dist[k] / 36.0);
+            dist[k] = bg.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+        return dist;
+    }
+
+    // 1.1.35
+    public static int roll(double[] dist) {
+        double count = 1.0;
+        Random rand = new Random();
+        double[] dice = new double[13];
+        while (true) {
+            int a = rand.nextInt(5) + 1;
+            int b = rand.nextInt(5) + 1;
+            dice[a + b] += 1.0;
+            BigDecimal bg = new BigDecimal(dice[a + b] / count);
+            double result = bg.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+            if (result == dist[a + b]) return (int)count;
+            count += 1.0;
+        }
+    
+    }
+
+    public static void main(String[] args) {
         // 1.1.9
         String s = "";
         for (int n = 1024; n > 0; n /= 2) {
@@ -113,7 +164,16 @@ public class Basic {
         System.out.println("最大公约数是" + gcd(1111111, 1234567));
 
         // 1.1.27
-        binomial(100, 50, 0.25);
+        // binomial(100, 50, 0.25);
+
+        // 1.1.30
+        boolean[][] array = coprime(10);
+
+        // 1.1.31 ……命令行好像不太能画图
+        // StdDraw.circle(50, 50, 10);
+
+        // 1.1.35
+        System.out.println(roll(dice()));
     }
 
 }

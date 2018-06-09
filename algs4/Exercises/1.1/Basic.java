@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
 import java.math.BigDecimal;
-import edu.princeton.cs.algs4.StdDraw;
+import java.math.RoundingMode;
 
 public class Basic {
 
@@ -87,7 +87,7 @@ public class Basic {
         
         for (int k = 2; k <= 2 * sides; k++) {
             BigDecimal bg = new BigDecimal(dist[k] / 36.0);
-            dist[k] = bg.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+            dist[k] = bg.setScale(3, RoundingMode.HALF_UP).doubleValue();
         }
         return dist;
     }
@@ -102,7 +102,7 @@ public class Basic {
             int b = rand.nextInt(5) + 1;
             dice[a + b] += 1.0;
             BigDecimal bg = new BigDecimal(dice[a + b] / count);
-            double result = bg.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+            double result = bg.setScale(3, RoundingMode.HALF_UP).doubleValue();
             if (result == dist[a + b]) return (int)count;
             count += 1.0;
         }
@@ -167,7 +167,7 @@ public class Basic {
         // binomial(100, 50, 0.25);
 
         // 1.1.30
-        boolean[][] array = coprime(10);
+        coprime(10);
 
         // 1.1.31 ……命令行好像不太能画图
         // StdDraw.circle(50, 50, 10);

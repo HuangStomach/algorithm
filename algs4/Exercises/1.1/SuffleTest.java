@@ -3,7 +3,6 @@ import java.util.Arrays;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class SuffleTest {
-
     private static void shuffle(int[] a) {
         int N = a.length;
         for (int i = 0; i < N; i++) {
@@ -40,5 +39,4 @@ public class SuffleTest {
             System.out.println(Arrays.toString(table[i]));
         }
     }
-
 }

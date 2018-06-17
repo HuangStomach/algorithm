@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-// 1.3.9
+// 1.3.10
 public class InfixToPostfix {
     public static void main(String[] args) {
         String str = "((1+2)*((3-4)*(5-6)))";

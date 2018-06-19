@@ -3,23 +3,19 @@ import java.util.Iterator;
 // 1.3.14
 
 public class ResizingArrayQueueOfStrings<String> implements Iterable<String> {
-    private Node first;
-    private Node last;
+    private String[] a = new String[1];
     private int N = 0;
-    private class Node {
-        String str;
-        Node next;
-    }
+    
     private void resize(int size) {
         String[] temp = new String[size];
-        for (int i = 1; i < a.length; i++) {
+        for (int i = 0; i < a.length; i++) {
             temp[i] = a[i];
         }
         a = temp;
     }
 
     public boolean isEmpty() {
-        return first == null;
+        return N == 0;
     }
 
     public int size() {
@@ -27,39 +23,16 @@ public class ResizingArrayQueueOfStrings<String> implements Iterable<String> {
     }
 
     public void enqueue(String str) {
-        Node old = last;
-        last = new Node();
-        last.str = str;
-        last.next = null;
-        if (isEmpty()) first = last;
-        else old.next = last;
-        N++;
+        if (N == a.length) resize(size * 2);
+        a[N++] = str;
     }
 
     public String dequeue() {
-        if (isEmpty()) return String.empty();
-        String str = first.str;
-        first = first.next();
-        if (isEmpty()) last = null;
-        N--;
-        return str;
-    }
-
-    public Iterator<String> iterator() {
-        return new ResizingArrayQueueOfStringsIterator();
-    }
-
-    private class ResizingArrayQueueOfStringsIterator implements Iterator<String> {
-        private Node current = null;
-        public boolean hasNext() { return i > 0; }
-        public String next() { 
-            if (current == null) {
-                current = first;
-                return current;
-            }
-            current = current.next;
-            return current;
+        String first = a[0];
+        for (int i = 1;i < N; i++){
+            a[i - 1] = a[i];
         }
-        public void remove() {}
+        a[N--] = null; //避免对象游离，回收机制不能及时回收
+        return first;
     }
 }

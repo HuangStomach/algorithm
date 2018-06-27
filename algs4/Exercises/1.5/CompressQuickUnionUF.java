@@ -1,6 +1,7 @@
 // 1.5.12
 public class CompressQuickUnionUF {
     private int[] id;
+    private int[] path;
     private int count;
 
     public CompressQuickUnionUF(int N) {
@@ -23,7 +24,7 @@ public class CompressQuickUnionUF {
         int root = p;
         while (root != id[p]) root = id[p];
         while (root != p) {
-            parent = id[p];
+            int parent = id[p];
             id[p] = root;
             p = parent;
         }

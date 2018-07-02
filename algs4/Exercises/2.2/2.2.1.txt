@@ -1,0 +1,14 @@
+// 2.2.1
+A E Q S U Y | E I N O S T
+A           | E             A
+  E         | E             A E
+    Q       | E             A E E
+    Q       |   I           A E E I
+    Q       |     N         A E E I N
+    Q       |       O       A E E I N O
+    Q       |         S     A E E I N O Q
+      S     |         S     A E E I N O Q S
+        U   |         S     A E E I N O Q S S
+        U   |           T   A E E I N O Q S S T
+        U   |               A E E I N O Q S S T U
+          Y |               A E E I N O Q S S T U Y

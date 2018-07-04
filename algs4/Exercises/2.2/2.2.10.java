@@ -1,5 +1,5 @@
 // 2.2.10
-public class MergeQuick extends Example {
+class MergeQuick extends Example {
     private static Comparable[] aux;
 
     public static void sort(Comparable[] a) {

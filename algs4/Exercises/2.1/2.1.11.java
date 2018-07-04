@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 // 2.1.11
-public class ArrayShellSort extends Example {
+class ArrayShellSort extends Example {
     public static void ArrayShelloSort(Comparable[] a) {
         int N = a.length;
         int h = 1;

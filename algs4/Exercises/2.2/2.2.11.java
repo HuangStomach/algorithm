@@ -1,5 +1,5 @@
 // 2.2.11
-public class MergeImprove extends Example {
+class MergeImprove extends Example {
     public static void sort(Comparable[] a) {
         Comparable[] aux = a.clone();
         sort(a, aux, 0, a.length - 1);

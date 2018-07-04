@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 import edu.princeton.cs.algs4.*;
 
-public class MergeChart {
+class MergeChart {
     public static void main(String[] args) {
         StdDraw.setXscale(0, 512);
         StdDraw.setYscale(0, 6 * 512 * Math.log10(512));

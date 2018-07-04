@@ -1,6 +1,6 @@
-// 1.2.25
+// 2.1.25
 
-public class NoExchangeInsertion extends Example {
+class NoExchangeInsertion extends Example {
     public static void sort(Comparable[] a) {
         for (int i = 1; i < a.length; i++) {
             Comparable x = a[i];

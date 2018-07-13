@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.*;
 
 class Quick extends Example {
     public static int count;
-
+    
     public static void sort(Comparable[] a) {
         StdRandom.shuffle(a);
         int max = 0;
@@ -32,8 +32,8 @@ class Quick extends Example {
         if (high - low > 5) {
             Random rn = new Random();
             HashMap<Comparable, Integer> map = new HashMap<Comparable, Integer>();
-            Comparable[] b = new Comparable[3];
-            if (j - i <= a.length) for (int k = 0; k < 3; k++) {
+            Comparable[] b = new Comparable[5];
+            if (j - i <= a.length) for (int k = 0; k < 5; k++) {
                 int index = rn.nextInt(j - i - 1) + i;
                 b[k] = a[index];
                 map.put(b[k], index);

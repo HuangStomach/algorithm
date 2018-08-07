@@ -1,4 +1,4 @@
-// amount为私有属性无法被that直接获取
+// 其中当amount相等的时候compareTo的顺序会使结果一样
 public class Balance implements Comparable<Balance> {
     private double amount;
 

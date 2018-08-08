@@ -3,7 +3,7 @@ public class MaxPQ<Key extends Comparable<KEY>> {
     private int N = 0;
 
     public MaxPQ(int max) {
-        pq = (Key[]) new Comparable(max + 1);
+        pq = (Key[]) new Comparable[max + 1];
     }
 
     public boolean isEmpty() {

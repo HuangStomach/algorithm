@@ -4,7 +4,6 @@ public class MaxPQ<Key extends Comparable<Key>> {
 
     public MaxPQ() {
         head = null;
-        pq = (Key[]) new Comparable();
     }
 
     public boolean isEmpty() {

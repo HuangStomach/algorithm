@@ -1,0 +1,9 @@
+buy:20:10
+buy:21:30
+sell:19:20
+sell:23:5
+sell:24:15
+sell:25:10
+buy:25:20
+buy:24:5
+sell:19:20

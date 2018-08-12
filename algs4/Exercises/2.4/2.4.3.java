@@ -30,6 +30,14 @@ public class MaxPQ<Key extends Comparable<Key>> {
                     top.next = node;
                     break;
                 }
+
+                if (top.next == null) {
+                    Node node = new Node();
+                    node.val = top.val;
+                    top.next = node;
+                    break;
+                }
+
                 top = top.next;
             }
         }

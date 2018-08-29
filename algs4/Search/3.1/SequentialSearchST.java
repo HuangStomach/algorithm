@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+
 public class SequentialSearchST<Key, Value> {
+    private int N;
     private Node first;
     private class Node {
         Key key;
@@ -27,5 +30,30 @@ public class SequentialSearchST<Key, Value> {
             }
         }
         first = new Node(key, val, first);
+        N++;
+    }
+
+    public void delete(Key key) {
+        Node prev = null;
+        for (Node x = first; x != null; prev = x, x = x.next) {
+            if (key.equals(x.key)) {
+                prev.next = x.next;
+                N--;
+                return;
+            }
+        }
+
+    }
+
+    public int size() {
+        return N;
+    }
+
+    public Iterable<Key> keys() {
+        List<Key> list = new ArrayList<Key>();
+        for (Node x = first; x != null; x = x.next) {
+            list.add(x.key);
+        }
+        return list;
     }
 }

@@ -33,16 +33,16 @@ public class SequentialSearchST<Key, Value> {
         N++;
     }
 
-    public void delete(Key key) {
+    public Key delete(Key key) {
         Node prev = null;
         for (Node x = first; x != null; prev = x, x = x.next) {
             if (key.equals(x.key)) {
                 prev.next = x.next;
                 N--;
-                return;
+                return key;
             }
         }
-
+        return null;
     }
 
     public int size() {

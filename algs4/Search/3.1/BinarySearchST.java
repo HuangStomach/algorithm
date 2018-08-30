@@ -18,6 +18,10 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         return N;
     }
 
+    public boolean isEmpty() {
+        return N == 0;
+    }
+
     public Value get(Key key) {
         if (isEmpty()) return null;
         int i = rank(key);
@@ -93,7 +97,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         Key[] keys = (Key[]) new Comparable[length];
         Value[] vals = (Value[]) new Object[length];
 
-        for (i = 0; i < N; i ++) {
+        for (int i = 0; i < N; i ++) {
             keys[i] = this.keys[i];
             vals[i] = this.vals[i];
         }

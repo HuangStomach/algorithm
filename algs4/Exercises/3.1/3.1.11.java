@@ -1,6 +1,26 @@
 import edu.princeton.cs.algs4.*;
 
-public class BinarySearchST<Key extends Comparable<Key>, Value> {
+class Chart {
+    public static void main(String[] args) {
+
+        String[] array = {"E", "A", "S", "Y", "Q", "U", "E", "S", "T", "I", "O", "N"};
+        StdDraw.setXscale(0, array.length);
+        StdDraw.setYscale(0, array.length);
+        StdDraw.setPenRadius(.01);
+        StdDraw.setPenColor(StdDraw.RED);
+        BinarySearchST st = new BinarySearchST<String, Integer>();
+
+        for (int i = 0; i < array.length; i++) {
+            st.put(array[i], 1);
+            System.out.println(st.compare);
+            StdDraw.point(i, st.compare);
+            st.compare = 0;
+        }
+    }
+}
+
+class BinarySearchST<Key extends Comparable<Key>, Value> {
+    public int compare = 0;
     private Key[] keys;
     private Value[] vals;
     private int N;
@@ -31,6 +51,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     public void put(Key key, Value val) {
         int i = rank(key);
+        
         if (i < N && keys[i].compareTo(key) == 0) {
             vals[i] = val;
             return;
@@ -73,6 +94,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         while (low <= high) {
             int mid = low + (high - low) / 2;
             int cmp = key.compareTo(keys[mid]);
+            compare++;
             if (cmp < 0) high = mid - 1;
             else if (cmp > 0) low = mid + 1;
             else return mid;

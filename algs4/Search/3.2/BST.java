@@ -1,3 +1,5 @@
+import java.util.Queue;
+
 public class BST<Key extends Comparable<Key>, Value> {
     private Node root;
     private class Node {
@@ -126,6 +128,25 @@ public class BST<Key extends Comparable<Key>, Value> {
             }
             node.N = size(node.left) + size(node.right) + 1;
             return node;
+        }
+
+        public Iterable<Key> keys() {
+            return keys(min(), max());
+        }
+
+        public Iterable<Key> keys(Key low, Key high) {
+            Queue<Key> q = new Queue<Key>();
+            keys(root, q, low, high);
+            return q;
+        }
+
+        private void keys(Node node, Queue<Key> q, Key low, Key high) {
+            if (node == null) return;
+            int cmpLow = low.compareTo(node.key);
+            int cmpHigh = high.compareTo(node.key);
+            if (cmpLow < 0) keys(node.left, q, low, high);
+            if (cmpLow <= 0 && cmpHigh >= 0) q.add(node.key);
+            if (cmpHigh > 0) keys(node.right, q, low, high);
         }
     }
 }

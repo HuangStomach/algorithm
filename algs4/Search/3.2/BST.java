@@ -46,5 +46,30 @@ public class BST<Key extends Comparable<Key>, Value> {
             node.N = size(node.left) + size(node.right) + 1;
             return node;
         }
+
+        public Key min() {
+            return min(root).key;
+        }
+
+        private Key min(Node node) {
+            if (node.left == null) return node.key;
+            return min(node.left);
+        }
+
+        public Key floor(Key key) {
+            Node node = floor(root, key);
+            if (node == null) return null;
+            return node.key;
+        }
+
+        public Node floor(Node node, Key key) {
+            if (node == null) return null;
+            int cmp = key.compareTo(node.key);
+            if (cmp == 0) return node;
+            else if (cmp < 0) return floor(node.left, key);
+            Node t = floor(node.right, key);
+            if (t != null) return t;
+            else return node;
+        }
     }
 }

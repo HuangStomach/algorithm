@@ -71,5 +71,29 @@ public class BST<Key extends Comparable<Key>, Value> {
             if (t != null) return t;
             else return node;
         }
+
+        public Key select(int k) {
+            return select(root, k).key;
+        }
+
+        private Node select(Node node, int k) {
+            if (node == null) return null;
+            int t = size(x.left);
+            if (t > k) return select(node.left, k);
+            else if (t < k) return select(node.right, k - t - 1);
+            else return node;
+        }
+
+        public int rank(Key key) {
+            return rank(key, root);
+        }
+
+        private int rank(Key key, Node node) {
+            if (node == null) return 0;
+            int cmp = key.compareTo(node.key);
+            if (cmp < 0) return rank(key, node.left);
+            else if (cmp > 0) return 1 + size(node.left) + rank(key, node.right);
+            else return size(node.left);
+        }
     }
 }

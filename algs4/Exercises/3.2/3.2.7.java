@@ -35,6 +35,18 @@ public class BST<Key extends Comparable<Key>, Value> {
         return Math.max(left, right);
     }
 
+    public int avgCompares() {
+        return length(root, 0) / size() + 1;
+    }
+
+    private int length(Node node, int l) {
+        if (node == null) return l;
+        l++;
+        int left = length(node.left, l);
+        int right = length(node.right, l);
+        return left + right;
+    }
+
     public Value get(Key key) {
         return get(root, key);
     }

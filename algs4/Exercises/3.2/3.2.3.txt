@@ -1,0 +1,6 @@
+H C A E R S X
+H C E A R S X
+H C R A E S X
+H R C X S A E
+H R S X C A E
+...

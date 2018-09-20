@@ -1,8 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
 class BST<Key extends Comparable<Key>, Value> {
-    private Node root;
-    private Node recent;
     private class Node {
         private Key key;
         private Value val;
@@ -37,7 +35,6 @@ class BST<Key extends Comparable<Key>, Value> {
     }
 
     public Value get(Key key) {
-        if (recent.key.compareTo(key) == 0) return recent.val;
         return get(root, key);
     }
 
@@ -46,17 +43,10 @@ class BST<Key extends Comparable<Key>, Value> {
         int cmp = key.compareTo(node.key);
         if (cmp < 0) return get(node.left, key);
         else if (cmp > 0) return get(node.right, key);
-        else {
-            recent = node;
-            return node.val;
-        }
+        else return node.val;
     }
 
     public void put(Key key, Value val) {
-        if (recent.key.compareTo(key) == 0) {
-            recent.val = val;
-            return;
-        }
         root = put(root, key, val);
     }
 
@@ -65,10 +55,7 @@ class BST<Key extends Comparable<Key>, Value> {
         int cmp = key.compareTo(node.key);
         if (cmp < 0) node.left = put(node.left, key, val);
         else if (cmp > 0) node.right = put(node.right, key, val);
-        else {
-            recent = node;
-            node.val = val;
-        }
+        else node.val = val;
 
         node.N = size(node.left) + size(node.right) + 1;
         return node;
@@ -181,5 +168,14 @@ class BST<Key extends Comparable<Key>, Value> {
         if (cmpLow < 0) keys(node.left, q, low, high);
         if (cmpLow <= 0 && cmpHigh >= 0) q.enqueue(node.key);
         if (cmpHigh > 0) keys(node.right, q, low, high);
+    }
+
+    public boolean isBinaryTree(Node node) {
+        if (node == null) return true;
+        int count = 1;
+        if (node.left != null) count += node.left.N;
+        if (node.right != null) count += node.right.N;
+
+        return node.N == count && isBinaryTree(node.left) && isBinaryTree(node.right);
     }
 }

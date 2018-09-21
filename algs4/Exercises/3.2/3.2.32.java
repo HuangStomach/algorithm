@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-class BST<Key extends Comparable<Key>, Value> {
+public class BST<Key extends Comparable<Key>, Value> {
     private Node root;
     private class Node {
         private Key key;
@@ -178,5 +178,25 @@ class BST<Key extends Comparable<Key>, Value> {
         if (node.right != null) count += node.right.N;
 
         return node.N == count && isBinaryTree(node.left) && isBinaryTree(node.right);
+    }
+
+    public boolean isOrdered(Node node, Key min, Key max) {
+        if (node == null) return true;
+        if (node.key.compareTo(min) < 0 || node.key.compareTo(max) > 0) return false;
+        return isOrdered(node.left, min, node.key) && isOrdered(node.right, node.key, max);
+    }
+
+    public boolean hasNoDuplicates(Node node) {
+        if (node == null) return true;
+        if (node.key.compareTo(node.left.key) == 0 || node.key.compareTo(node.right.key) == 0 
+        || node.left.key.compareTo(node.right.key) == 0) return false;
+        return hasNoDuplicates(node.left) && hasNoDuplicates(node.right);
+    }
+
+    public boolean isBST(Node node) {
+        if (!isBinaryTree(node)) return false;
+        if (!isOrdered(node, min(), max())) return false;
+        if (!hasNoDuplicates(node)) return false;
+        return true;
     }
 }

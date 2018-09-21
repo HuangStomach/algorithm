@@ -89,7 +89,7 @@ class BST<Key extends Comparable<Key>, Value> {
 
     private Node max(Node node) {
         if (node.right == null) return node;
-        return min(node.right);
+        return max(node.right);
     }
 
     public Key floor(Key key) {

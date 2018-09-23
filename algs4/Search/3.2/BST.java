@@ -96,6 +96,22 @@ public class BST<Key extends Comparable<Key>, Value> {
         else return node;
     }
 
+    public Key ceiling(Key key) {
+        Node node = floor(root, key);
+        if (node == null) return null;
+        return node.key;
+    }
+
+    public Node ceiling(Node node, Key key) {
+        if (node == null) return null;
+        int cmp = key.compareTo(node.key);
+        if (cmp == 0) return node;
+        else if (cmp > 0) return ceiling(node.right, key);
+        Node t = ceiling(node.left, key);
+        if (t != null) return t;
+        else return node;
+    }
+
     public Key select(int k) {
         return select(root, k).key;
     }

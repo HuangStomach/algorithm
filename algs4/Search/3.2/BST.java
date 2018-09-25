@@ -35,6 +35,17 @@ public class BST<Key extends Comparable<Key>, Value> {
         return left + right;
     }
 
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node node) {
+        if (node == null) return 0;
+        int left = height(node.left);
+        int right = height(node.right);
+        return Math.max(left, right) + 1;
+    }
+
     public Value get(Key key) {
         return get(root, key);
     }

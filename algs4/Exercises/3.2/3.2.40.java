@@ -2,58 +2,31 @@ import java.util.Random;
 
 import edu.princeton.cs.algs4.*;
 
-class Average {
+class AverageHeight {
     public static void main(String[] args) {
         int limit = args.length > 0 ? Integer.parseInt(args[0]) : 10000;
         
-        double average = 1.39 * (Math.log10(limit) / Math.log10(2)) - 1.85;
-        double[] ds = new double[100];
-        double[] dds = new double[100];
-        int dsindex = 0;
-        double[] df = new double[100];
-        double[] ddf = new double[100];
-        int dfindex = 0;
-
-        while (dsindex < 100 || dfindex < 100) {
+        double average = 2.99 * (Math.log10(limit) / Math.log10(2));
+        int[] heights = new int[100];
+        for (int i = 0; i < 100; i++) {
             BST<Integer, Integer> bst = new BST<Integer, Integer>();
             Random random = new Random();
             while(bst.size() < limit) {
                 Integer value = Integer.valueOf(random.nextInt(limit * 2));
                 bst.put(value, 1);
             }
-
-            Integer result = bst.get(random.nextInt(limit * 2));
-            if (result != null) {
-                if (dsindex == 100) continue;
-                ds[dsindex] = bst.count - average;
-                dds[dsindex] = Math.pow(ds[dsindex], 2);
-                dsindex++;
-            }
-            else {
-                if (dfindex == 100) continue;
-                df[dfindex] = bst.count - average;
-                ddf[dfindex] = Math.pow(df[dfindex], 2);
-                dfindex++;
-            }
+            heights[i] = bst.height();
         }
         
-        double success = 0;
-        double successSqrt = 0;
-        double fail = 0;
-        double failSqrt = 0;
+        int height = 0;
         for (int i = 0; i < 100; i++) {
-            success += ds[i];
-            successSqrt += dds[i];
-            fail += df[i];
-            failSqrt += ddf[i];
+            height += heights[i];
         }
-        System.out.println("命中的平均差是" + success / 100 + "标准差是" + Math.sqrt(successSqrt) / 100);
-        System.out.println("未命中的平均差是" + fail / 100 + "标准差是" + Math.sqrt(failSqrt) / 100);
+        System.out.println("高度平均值是" + height / 100 + "估计值是" + average);
     }
 }
 
 class BST<Key extends Comparable<Key>, Value> {
-    public int count;
     private Node root;
     private class Node {
         private Key key;
@@ -88,6 +61,17 @@ class BST<Key extends Comparable<Key>, Value> {
         return left + right;
     }
 
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node node) {
+        if (node == null) return 0;
+        int left = height(node.left);
+        int right = height(node.right);
+        return Math.max(left, right) + 1;
+    }
+
     public Value get(Key key) {
         return get(root, key);
     }
@@ -95,7 +79,6 @@ class BST<Key extends Comparable<Key>, Value> {
     private Value get(Node node, Key key) {
         if (node == null) return null;
         int cmp = key.compareTo(node.key);
-        count++;
         if (cmp < 0) return get(node.left, key);
         else if (cmp > 0) return get(node.right, key);
         else return node.val;

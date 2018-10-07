@@ -1,0 +1,24 @@
+1.
+                 b
+        a                   c
+小于a       ab之间  bc之间      大于c
+
+2.
+                           b d
+        a                   c            大于d
+小于a       ab之间   bc之间      cd之间
+
+3.
+               a c
+小于a           b                   d
+        ab之间      bc之间  cd之间      大于d
+
+4.
+                         b d e
+        a                  c           de之间      大于e
+小于a       ab之间 bc之间       cd之间
+
+5.
+                        a b d
+小于a    ab之间            c                    e
+                bc之间          dc之间 de之间       大于e

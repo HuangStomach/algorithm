@@ -1,4 +1,4 @@
-public class RedBlackBST<Key extends Comparable<Key>, Value> {
+class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
     private Node root;
@@ -90,11 +90,17 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         else if (cmp > 0) h.right = put(h.right, key, val);
         else h.val = val;
 
-        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.right) && !isRed(h.left)) {
+            if (h.key == "E") {
+                System.out.println("准备左旋" + h.key);
+            }
+            h = rotateLeft(h);
+        }
         if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
         if (isRed(h.left) && isRed(h.right)) flipColors(h);
 
         h.N = 1 + size(h.left) + size(h.right);
+
         return h;
     }
 
@@ -170,5 +176,37 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (cmp < 0) return rank(key, node.left);
         else if (cmp > 0) return 1 + size(node.left) + rank(key, node.right);
         else return size(node.left);
+    }
+
+    public static void main(String[] args) {
+        String str = "E A S Y Q U T I O N";
+        String[] keys = str.split("\\s+");
+        RedBlackBST<String, Boolean> bst = new RedBlackBST<String, Boolean>();
+
+        for (int i = 0; i < keys.length; i++) {
+            bst.put(keys[i], true);
+        }
+        
+        assert bst.root.key.equals("S") : "root的key错误";
+        assert bst.root.left.key.equals("O") : "root.left的key错误";
+        assert bst.root.right.key.equals("U") : "root.right的key错误";
+
+        RedBlackBST.Node o = bst.root.left;
+        RedBlackBST.Node u = bst.root.right;
+        assert u.left.key.equals("T") : "u.left的key错误";
+        assert u.right.key.equals("Y") : "u.right的key错误";
+        assert o.left.key.equals("E") : "o.left的key错误";
+        assert o.right.key.equals("Q") : "o.right的key错误";
+        assert bst.isRed(o.left) : "o.left不是红链接";
+
+        RedBlackBST.Node e = o.left;
+        assert e.left.key.equals("A") : "e.left的key错误";
+        assert e.right.key.equals("N") : "e.right的key错误";
+
+        RedBlackBST.Node n = e.right;
+        assert n.left.key.equals("I") : "n.left的key错误";
+        assert bst.isRed(n.left) : "n.left不是红链接";
+
+        System.out.println("测试用例通过");
     }
 }

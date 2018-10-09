@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.*;
+
 public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
@@ -78,7 +80,39 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     public void put(Key key, Value val) {
-        root = put(root, key, val);
+        if (root == null) {
+            root = new Node(key, val, 1, RED);
+            return;
+        }
+        
+        // 但是我更新不了size啊……
+        Node parent = null;
+        Node node = root;
+        while (node != null) {
+            if (isRed(node.left) && isRed(node.right)) flipColors(node);
+
+            if (isRed(h.right) && !isRed(h.left)) node = rotateLeft(node);
+            if (isRed(h.left) && isRed(h.left.left)) node = rotateRight(node);
+
+            parent = node;
+            int cmp = key.compareTo(node.key);
+            if (cmp < 0) node = node.left;
+            else if (cmp > 0) node = node.right;
+            else {
+                node.val = val;
+                break;
+            }
+        }
+
+        if (node == null) {
+            node = new Node(key, val, 1, RED);
+            int cmp = key.compareTo(parent.key);
+            if (cmp < 0) parent.left = node;
+            else parent.right = node;
+
+            parent.size = 1 + size(parent.left) + size(parent.left);
+        }
+
         root.color = BLACK;
     }
 

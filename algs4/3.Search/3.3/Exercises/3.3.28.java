@@ -1,5 +1,3 @@
-import edu.princeton.cs.algs4.*;
-
 public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
@@ -10,14 +8,16 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         Value val;
         Node left;
         Node right;
+        Node parent;
         int N;
         boolean color;
 
-        Node(Key key, Value val, int N, boolean color) {
+        Node(Key key, Value val, int N, boolean color, Node parent) {
             this.key = key;
             this.val = val;
             this.N = N;
             this.color = color;
+            this.parent = parent;
         }
     }
 
@@ -43,7 +43,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     private Node rotateLeft(Node h) {
         Node x = h.right;
+        x.parent = h.parent;
+        h.parent = x;
+
         h.right = x.left;
+        h.right.parent = h;
         x.left = h;
 
         x.color = h.color;
@@ -56,7 +60,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     private Node rotateRight(Node h) {
         Node x = h.left;
+        x.parent = h.parent;
+        h.parent = x;
+
         h.left = x.right;
+        h.left.parent = h;
         x.right = h;
 
         x.color = h.color;
@@ -80,40 +88,30 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     public void put(Key key, Value val) {
-        if (root == null) {
-            root = new Node(key, val, 1, RED);
-            return;
-        }
-        
-        // 但是我更新不了size啊……
-        Node parent = null;
-        Node node = root;
-        while (node != null) {
-            if (isRed(node.left) && isRed(node.right)) flipColors(node);
+        root = put(root, key, val, null);
+        root.color = BLACK;
+    }
 
-            if (isRed(h.right) && !isRed(h.left)) node = rotateLeft(node);
-            if (isRed(h.left) && isRed(h.left.left)) node = rotateRight(node);
-
-            parent = node;
-            int cmp = key.compareTo(node.key);
-            if (cmp < 0) node = node.left;
-            else if (cmp > 0) node = node.right;
-            else {
-                node.val = val;
-                break;
-            }
-        }
-
-        if (node == null) {
-            node = new Node(key, val, 1, RED);
+    private Node put(Node h, Key key, Value val, Node parent) {
+        if (h == null) {
             int cmp = key.compareTo(parent.key);
+            Node = new Node(key, val, 1, RED, parent);
             if (cmp < 0) parent.left = node;
             else parent.right = node;
-
-            parent.size = 1 + size(parent.left) + size(parent.left);
+        
+            if (isRed(parent.left) && isRed(parent.right)) flipColors(parent);
         }
 
-        root.color = BLACK;
+        int cmp = key.compareTo(h.key);
+        if (cmp < 0) put(h.left, key, val, h);
+        else if (cmp > 0) put(h.right, key, val, h);
+        else h.val = val;
+
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+
+        h.N = 1 + size(h.left) + size(h.right);
+        return h;
     }
 
     public Key min() {

@@ -61,6 +61,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return h;
     }
 
+    private Node movedRedRight(Node h) {
+        flipColors(h);
+        if (!isRed(h.left.left)) h = rotateRight(h);
+        return h;
+    }
+
     private Node rotateLeft(Node h) {
         Node x = h.right;
         h.right = x.left;
@@ -130,6 +136,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (h.left == null) return null;
         if (!isRed(h.left) && !isRed(h.left.left)) h = movedRedLeft(h);
         h.left = deleteMin(h.left);
+        return balance(h);
+    }
+
+    public void deleteMax() {
+        if (!isRed(root.left) && !isRed(root.right)) root.color = RED;
+        root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMax(Node h) {
+        if (isRed(h.left)) h = rotateRight(h);
+        if (h.right == null) return null;
+        if (!isRed(h.right) && !isRed(h.right.left)) h = movedRedRight(h);
+        h.right = deleteMax(h.right);
         return balance(h);
     }
 

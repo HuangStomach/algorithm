@@ -2,20 +2,33 @@ import edu.princeton.cs.algs4.*;
 
 public class LinearProbingHashST<Key, Value> {
     private int N;
-    private int M = 16;
+    private int M;
     private Key[] keys;
     private Value[] vals;
 
     public LinearProbingHashST() {
-        keys = (Key[]) new Object[M];
-        vals = (Value[]) new Object[M];
+        this.LinearProbingHashST(16);
+    }
+
+    public LinearProbingHashST(int M) {
+        this.M = M;
+        keys = (Key[]) new Object[this.M];
+        vals = (Value[]) new Object[this.M];
     }
 
     private int hash(Key key) {
         return (key.hashCode() & 0x7fffffff) % M;
     }
 
-    private void resize(int size) {}
+    private void resize(int cap) {
+        LinearProbingHashST<Key, Value> t = new LinearProbingHashST(cap);
+        for (int i = 0; i < M; i++) {
+            if (keys[i] != null) t.put(keys[i], vals[i]);
+        }
+        this.keys = t.keys;
+        this.vals = t.vals;
+        this.M = t.M;
+    }
 
     public void put(Key key, Value val) {
         if (N >= M / 2) resize(2 * M);

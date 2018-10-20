@@ -37,7 +37,10 @@ public class SeparateChainingHashST<Key, Value> {
     public void put(Key key, Value val) {
         if (N >= 8 * M) resize(2 * M);
         st[hash(key)].put(key, val);
-        N++;
+        N = 0;
+        for (int i = 0; i < M; i++) {
+            if (st[i] != null) N += st[i].size();
+        }
     }
 
     public void delete(Key key) {

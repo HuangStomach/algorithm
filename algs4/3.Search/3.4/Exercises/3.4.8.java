@@ -1,6 +1,7 @@
+import java.util.Random;
 import edu.princeton.cs.algs4.*;
 
-public class SeparateChainingHashST<Key, Value> {
+class SeparateChainingHashST<Key, Value> {
     private int N;
     private int M;
     private SequentialSearchST<Key, Value>[] st;
@@ -56,5 +57,22 @@ public class SeparateChainingHashST<Key, Value> {
     public boolean contains(Key key) {
         if (key == null) return false;
         return get(key) != null;
+    } 
+
+    public int blank() {
+        int O = 0;
+        for (int i = 0; i < M; i++) {
+            if (st[i] == null || st[i].size() == 0) O++;
+        }
+        return O;
+    }
+
+    public static void main(String[] args) {
+        Random rn = new Random();
+        SeparateChainingHashST<Integer, Boolean> st = new SeparateChainingHashST();
+        for (int i = 0; i < 100000; i++) {
+            st.put(rn.nextInt(), true);
+        }
+        System.out.println("空链表个数为: " + st.blank());
     }
 }

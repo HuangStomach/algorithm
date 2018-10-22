@@ -13,16 +13,17 @@ class SeparateChainingHashST<Key, Value> {
         }
     }
 
-    private int hash(Key key, int k) {
-        return (11 * k) % M;
+    private int hash(Key key) {
+        int index = key.toString().toUpperCase().charAt(0);
+        return (11 * index) % M;
     }
 
-    public Value get(Key key, int k) {
-        return (Value) st[hash(key, k)].get(key);
+    public Value get(Key key) {
+        return (Value) st[hash(key)].get(key);
     }
 
-    public void put(Key key, Value val, int k) {
-        st[hash(key, k)].put(key, val);
+    public void put(Key key, Value val) {
+        st[hash(key)].put(key, val);
         N = 0;
         for (int i = 0; i < M; i++) {
             if (st[i] != null) N += st[i].size();
@@ -36,12 +37,12 @@ class SeparateChainingHashST<Key, Value> {
         
         SeparateChainingHashST<String, Boolean> sta = new SeparateChainingHashST(16);
         for (int i = 1; i <= n; i++) {
-            sta.put(keys[i], true, i);
+            sta.put(keys[i], true);
         }
         
         SeparateChainingHashST<String, Boolean> stb = new SeparateChainingHashST(16);
         for (int i = 1; i <= n; i++) {
-            stb.put(keys[i], true, i);
+            stb.put(keys[i], true);
         }
     }
 }

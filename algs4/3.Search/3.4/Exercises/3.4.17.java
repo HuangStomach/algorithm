@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-public class LinearProbingHashST<Key, Value> {
+class LinearProbingHashST<Key, Value> {
     private int N;
     private int M;
     private Key[] keys;
@@ -80,5 +80,27 @@ public class LinearProbingHashST<Key, Value> {
     public boolean contains(Key key) {
         if (key == null) return false;
         return get(key) != null;
+    }
+
+    public void print() {
+        for (int i = 0; i < keys.length; i++) {
+            if (keys[i] == null) System.out.print(". ");
+            else System.out.print(keys[i]);
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        String test = "S E A R C H E X A M P L E";
+        String[] keys = test.split("\\s+");
+        int n = keys.length;
+        
+        LinearProbingHashST<String, Boolean> st = new LinearProbingHashST();
+        for (int i = 0; i < n; i++) {
+            st.put(keys[i], true);
+        }
+        st.delete("C");
+
+        st.print();
     }
 }

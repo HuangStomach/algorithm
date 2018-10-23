@@ -48,7 +48,7 @@ public class SeparateChainingHashST<Key, Value> {
 
     public void delete(Key key) {
         int i = hash(key);
-        if (st[i].contains(key)) n--;
+        if (st[i].contains(key)) N--;
         st[i].delete(key);
         
         if (N > 0 && N <= 2 * M) resize(M / 2);
@@ -61,7 +61,7 @@ public class SeparateChainingHashST<Key, Value> {
     
     public Iterable<Key> keys() {
         Queue<Key> queue = new Queue<Key>();
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < M; i++) {
             for (Key key : st[i].keys())
                 queue.enqueue(key);
         }

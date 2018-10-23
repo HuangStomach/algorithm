@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-public class SeparateChainingHashST<Key, Value> {
+class SeparateChainingHashST<Key, Value> {
     private int N;
     private int M;
     private SequentialSearchST<Key, Value>[] st;
@@ -18,7 +18,12 @@ public class SeparateChainingHashST<Key, Value> {
     }
 
     private int hash(Key key) {
-        return (key.hashCode() & 0x7fffffff) % M;
+        String s = key.toString();
+        int hash = 0;
+        for (int i = 0; i < s.length(); i++) {
+            hash = (256 * hash + s.charAt(i)) % 255;
+        }
+        return hash;
     }
 
     private void resize(int cap) {
@@ -57,5 +62,37 @@ public class SeparateChainingHashST<Key, Value> {
     public boolean contains(Key key) {
         if (key == null) return false;
         return get(key) != null;
+    }
+    
+    public Iterable<Key> keys() {
+        Queue<Key> queue = new Queue<Key>();
+        for (int i = 0; i < M; i++) {
+            for (Key key : st[i].keys())
+                queue.enqueue(key);
+        }
+        return queue;
+    }
+
+    public void print() {
+        for (int i = 0; i < M; i++) {
+            if (st[i] == null || st[i].size() == 0) continue;
+            for (Key key: st[i].keys()) {
+                System.out.print(key + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        SeparateChainingHashST<String, Boolean> st = new SeparateChainingHashST();
+        String test = "A B C D E F G H I J K L M N O P";
+        String[] keys = test.split("\\s+");
+        
+        for (int i = 0; i < 100; i++) {
+            StdRandom.shuffle(keys);
+            st.put(String.join("", keys), true);
+        }
+
+        st.print();
     }
 }

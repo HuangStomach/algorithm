@@ -84,7 +84,7 @@ public class LinearProbingHashST<Key, Value> {
     
     public Iterable<Key> keys() {
         Queue<Key> queue = new Queue<Key>();
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < M; i++)
             if (keys[i] != null) queue.enqueue(keys[i]);
         return queue;
     }

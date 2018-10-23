@@ -4,6 +4,8 @@ public class SeparateChainingHashST<Key, Value> {
     private int N;
     private int M;
     private int O;
+    private double lgM;
+    private int[] primes; // 先不往里面写了……
     private SequentialSearchST<Key, Value>[] st;
 
     public SeparateChainingHashST() {
@@ -12,6 +14,7 @@ public class SeparateChainingHashST<Key, Value> {
 
     public SeparateChainingHashST(int M, int O) {
         this.M = M;
+        this.lgM = Math.log(M) / Math.log(2);
         st = (SequentialSearchST<Key, Value>[]) new SequentialSearchST[M];
         for (int i = 0; i < M; i++) {
             st[i] = new SequentialSearchST();
@@ -19,7 +22,9 @@ public class SeparateChainingHashST<Key, Value> {
     }
 
     private int hash(Key key) {
-        return (key.hashCode() & 0x7fffffff) % M;
+        int t = key.hashCode() & 0x7fffffff;
+        if (lgM < 26) t = t % primes[lgM + 5];
+        return t % M;
     }
 
     private void resize(int cap) {

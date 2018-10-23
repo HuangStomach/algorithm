@@ -81,4 +81,11 @@ public class LinearProbingHashST<Key, Value> {
         if (key == null) return false;
         return get(key) != null;
     }
+    
+    public Iterable<Key> keys() {
+        Queue<Key> queue = new Queue<Key>();
+        for (int i = 0; i < m; i++)
+            if (keys[i] != null) queue.enqueue(keys[i]);
+        return queue;
+    }
 }

@@ -58,4 +58,13 @@ public class SeparateChainingHashST<Key, Value> {
         if (key == null) return false;
         return get(key) != null;
     }
+    
+    public Iterable<Key> keys() {
+        Queue<Key> queue = new Queue<Key>();
+        for (int i = 0; i < m; i++) {
+            for (Key key : st[i].keys())
+                queue.enqueue(key);
+        }
+        return queue;
+    } 
 }

@@ -23,18 +23,6 @@ class SeparateChainingHashST<Key, Value> {
         return (17 * index) % M;
     }
 
-    private void resize(int cap) {
-        SeparateChainingHashST<Key, Value> t = new SeparateChainingHashST(cap);
-        for (int i = 0; i < M; i++) {
-            if (st[i] == null || st[i].size() == 0) continue;
-            for (Key key : st[i].keys()) {
-                t.put(key, st[i].get(key));
-            }
-        }
-        this.st = t.st;
-        this.M = t.M;
-    }
-
     public void put(Key key, Value val) {
         // if (N * 2 >= M) resize(2 * M);
         var stA = st[hashA(key)];
@@ -64,7 +52,7 @@ class SeparateChainingHashST<Key, Value> {
         String[] keys = test.split("\\s+");
         int n = keys.length;
         
-        SeparateChainingHashST<String, Boolean> st = new SeparateChainingHashST(4);
+        SeparateChainingHashST<String, Boolean> st = new SeparateChainingHashST(3);
         for (int i = 0; i < n; i++) {
             st.put(keys[i], true);
             st.print();

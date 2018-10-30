@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class SequentialSearchST<Key, Value> {
+public class SequentialSearchST<Key> {
     private int N;
     private Node first;
     private class Node {

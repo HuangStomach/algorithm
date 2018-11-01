@@ -1,14 +1,14 @@
 import edu.princeton.cs.algs4.*;
 
-public class BinarySearchST<Key extends Comparable<Key>> {
+public class BinarySearchSET<Key extends Comparable<Key>> {
     private Key[] keys;
     private int N;
 
-    public BinarySearchST() {
+    public BinarySearchSET() {
         this(5);
     }
 
-    public BinarySearchST(int capacity) {
+    public BinarySearchSET(int capacity) {
         keys = (Key[]) new Comparable[capacity];
     }
 

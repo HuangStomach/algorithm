@@ -33,5 +33,6 @@ class InvertedConcordance {
             System.out.print(bst.get(bst.min()) + " ");
             bst.deleteMin();
         }
+        System.out.println();
     }
 }

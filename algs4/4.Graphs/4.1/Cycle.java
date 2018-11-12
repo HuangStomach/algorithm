@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.*;
+
 public class Cycle {
     private boolean[] marked;
     private boolean hashCycle;

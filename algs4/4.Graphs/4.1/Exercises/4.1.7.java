@@ -40,6 +40,7 @@ class Graph {
     public int E() { return E; }
 
     public void addEdge(int v, int w) {
+        if (v == w || hasEdge(v, w)) return;
         adj[v].add(w);
         adj[w].add(v);
         E++;
@@ -92,5 +93,12 @@ class Graph {
             }
         }
         return count / 2;
+    }
+
+    public static void main(String[] args) {
+        String filename = args[0];
+        In in = new In(filename);
+        Graph g = new Graph(in);
+        System.out.println(g);
     }
 }

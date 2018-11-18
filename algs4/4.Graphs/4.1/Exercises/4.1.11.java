@@ -1,8 +1,6 @@
-import java.util.Queue;
-
 import edu.princeton.cs.algs4.*;
 
-public class BreathFirstPaths {
+class BreathFirstPaths {
     private boolean[] marked;
     private int[] edgeTo;
     private int s;
@@ -22,7 +20,7 @@ public class BreathFirstPaths {
         while (queue.size() > 0) {
             int v = queue.dequeue();
             for (int w: G.adj(v)) {
-                if (marked[i]) continue;
+                if (marked[w]) continue;
                 edgeTo[w] = v;
                 marked[w] = true;
                 queue.enqueue(w);
@@ -46,5 +44,20 @@ public class BreathFirstPaths {
 
     public int count() {
         return count;
+    }
+
+    public static void main(String[] args) {
+        String filename = args[0];
+        In in = new In(filename);
+        Graph g = new Graph(in);
+
+        BreathFirstPaths dfs  = new BreathFirstPaths(g, 0);
+        for (int i = 0; i < g.V(); i++) {
+            System.out.print(i + ": ");
+            if (dfs.pathTo(i) != null) for (int j: dfs.pathTo(i)) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
     }
 }

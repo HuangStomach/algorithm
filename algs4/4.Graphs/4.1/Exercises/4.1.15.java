@@ -28,10 +28,13 @@ class Graph {
     public Graph(In in) {
         this(in.readInt());
         E = in.readInt();
-        for (int i = 0; i < E; i++) {
-            int v = in.readInt();
-            int w = in.readInt();
-            addEdge(v, w);
+        in.readLine();
+        while (in.hasNextLine()) {
+            String line = in.readLine();
+            String[] array = line.split(" ");
+            for (int i = 1; i < array.length; i++) {
+                addEdge(Integer.parseInt(array[0]), Integer.parseInt(array[i]));
+            }
         }
     }
 
@@ -93,5 +96,12 @@ class Graph {
             }
         }
         return count / 2;
+    }
+
+    public static void main(String[] args) {
+        String filename = args[0];
+        In in = new In(filename);
+        Graph g = new Graph(in);
+        System.out.println(g.toString());
     }
 }

@@ -13,7 +13,7 @@ class GraphProperties {
         eccentricitys = new int[G.V()];
         this.G = G;
         for (int i = 0; i < G.V(); i++) {
-            BreathFirstPaths bfs = new BreathFirstPaths(this.G, i);
+            BreadthFirstPaths bfs = new BreadthFirstPaths(this.G, i);
             for (int j = 0; i < G.V(); i++) {
                 eccentricitys[i] = Math.max(eccentricitys[i], bfs.pathTo(j).size());
             }

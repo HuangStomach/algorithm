@@ -2,13 +2,13 @@ import java.util.Queue;
 
 import edu.princeton.cs.algs4.*;
 
-public class BreathFirstPaths {
+public class BreadthFirstPaths {
     private boolean[] marked;
     private int[] edgeTo;
     private int s;
     private int count;
 
-    public BreathFirstPaths(Graph G, int s) {
+    public BreadthFirstPaths(Graph G, int s) {
         marked = new boolean[G.V()];
         edgeTo = new int[G.V()];
         this.s = s;

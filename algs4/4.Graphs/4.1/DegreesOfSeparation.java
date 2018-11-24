@@ -12,7 +12,7 @@ public class DegreesOfSeparation {
         }
 
         int s = sg.index(source);
-        BreathFirstPaths bfs = new BreathFirstPaths(G, s);
+        BreadthFirstPaths bfs = new BreadthFirstPaths(G, s);
 
         while (!StdIn.isEmpty()) {
             String sink = StdIn.readLine();

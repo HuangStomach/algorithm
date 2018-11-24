@@ -1,12 +1,12 @@
 import edu.princeton.cs.algs4.*;
 
-class BreathFirstPaths {
+class BreadthFirstPaths {
     private boolean[] marked;
     private int[] edgeTo;
     private int s;
     private int count;
 
-    public BreathFirstPaths(Graph G, int s) {
+    public BreadthFirstPaths(Graph G, int s) {
         marked = new boolean[G.V()];
         edgeTo = new int[G.V()];
         this.s = s;
@@ -51,7 +51,7 @@ class BreathFirstPaths {
         In in = new In(filename);
         Graph g = new Graph(in);
 
-        BreathFirstPaths dfs  = new BreathFirstPaths(g, 0);
+        BreadthFirstPaths dfs  = new BreadthFirstPaths(g, 0);
         for (int i = 0; i < g.V(); i++) {
             System.out.print(i + ": ");
             if (dfs.pathTo(i) != null) for (int j: dfs.pathTo(i)) {

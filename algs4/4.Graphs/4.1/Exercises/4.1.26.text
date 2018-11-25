@@ -1,0 +1,21 @@
+class 内部主要属性为
+
+private final int V;
+private int E;
+private Bag<Integer>[] adj;
+
+其中对象开销
+
+16字节
+4字节填充
+
+int型 V 需要4字节
+E 需要4字节
+
+其中数组需要 (24 + 背包 * V) 字节
+
+背包占用字节均摊 E条边
+
+最坏情况 24 + 4 * E 字节
+
+占用内存为 52 + ((24 + 4 * E) * V) 字节

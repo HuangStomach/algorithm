@@ -24,7 +24,7 @@ public class SymbolGraph {
         in = new In(Stream);
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(sp);
-            for (int i = 0; i < a.length; i++) {
+            for (int i = 1; i < a.length; i++) {
                 G.addEdge(v, st.get(a[i]));
             }
         }

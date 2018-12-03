@@ -39,7 +39,7 @@ class DepthFirstOrder {
         return post;
     }
 
-    public Integer<Integer> reservePost() {
+    public Iterable<Integer> reservePost() {
         return reservePost;
     }
 }

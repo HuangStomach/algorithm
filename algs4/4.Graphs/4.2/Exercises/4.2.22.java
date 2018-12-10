@@ -18,5 +18,4 @@ class ShortestAncestralPath {
         
         return distV < distW ? bfs.pathTo(v) : bfs.pathTo(w);
     }
-
 }

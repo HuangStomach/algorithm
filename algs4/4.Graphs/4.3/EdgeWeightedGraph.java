@@ -43,4 +43,14 @@ class EdgeWeightedGraph {
         }
         return b;
     }
+
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        EdgeWeightedGraph G = new EdgeWeightedGraph(in);
+        MST mst = new MST(G);
+        for (Edge e: mst.edges()) {
+            System.out.println(e);
+        }
+        System.out.println(mst.weight());
+    }
 }

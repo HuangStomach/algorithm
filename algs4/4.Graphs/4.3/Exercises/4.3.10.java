@@ -3,15 +3,13 @@ import edu.princeton.cs.algs4.*;
 class EdgeWeightedGraph {
     private final int V;
     private int E;
-    private Bag<Edge>[] adj;
+    private double[][] weight;
+    //private Bag<Edge>[] adj;
 
     public EdgeWeightedGraph(int v) {
         this.V = v;
         this.E = 0;
-        adj = (Bag<Edge>[]) new Bag[V];
-        for (int i = 0; i < V; i++) {
-            adj[i] = new Bag<Edge>();
-        }
+        this.weight = new double[v][v];
     }
     
     public EdgeWeightedGraph(In in) {
@@ -21,7 +19,7 @@ class EdgeWeightedGraph {
             int v = in.readInt();
             int w = in.readInt();
             double weight = in.readDouble();
-            addEdge(new Edge(v, w, weight));
+            addEdge(v, w, weight);
         }
     }
 
@@ -33,35 +31,29 @@ class EdgeWeightedGraph {
         return E;
     }
 
-    public void addEdge(Edge e) {
-        int v = e.either;
-        int w = e.other(v);
-        adj[v].add(e);
-        adj[w].add(e);
+    public void addEdge(int v, int w, double weight) {
+        this.weight[v][w] = weight;
+        this.weight[w][v] = weight;
         E++;
     }
 
     public Iterable<Edge> adj(int v) {
-        return adj[v];
-    }
-
-    public Iterable<Edge> edges() {
         Bag<Edge> b = new Bag<Edge>();
-        for (int v = 0; v < V; v++) {
-            for (Edge e: adj[v]) {
-                if (e.other(v) > v) b.add(e);
+        for (int i = 0; i < this.V(); i++) {
+            if (this.weight[v][i] > 0) {
+                b.add(new Edge(v, i, this.weight[v][i]));
             }
         }
         return b;
     }
 
-    public static void main(String[] args) {
-        In in = new In(args[0]);
-        EdgeWeightedGraph G = new EdgeWeightedGraph(in);
-        MST mst = new MST(G);
-        for (Edge e: mst.edges()) {
-            System.out.println(e);
+    public Iterable<Edge> edges() {
+        Bag<Edge> b = new Bag<Edge>();
+        for (int v = 0; v < V; v++) {
+            for (Edge e: this.adj(v)) {
+                if (e.other(v) > v) b.add(e);
+            }
         }
-        System.out.println(mst.weight());
+        return b;
     }
 }

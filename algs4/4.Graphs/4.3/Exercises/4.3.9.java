@@ -20,7 +20,7 @@ class EdgeWeightedGraph {
         for (int i = 0; i < E; i++) {
             int v = in.readInt();
             int w = in.readInt();
-            int weight = in.readInt();
+            double weight = in.readDouble();
             addEdge(new Edge(v, w, weight));
         }
     }

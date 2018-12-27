@@ -33,4 +33,12 @@ class LazyPrimMST {
     public Iterable<Edge> edges() {
         return mst;
     }
+
+    public double weight() {
+        double weight = 0.0;
+        for (Edge e: edges())  {
+            weight += e.weight();
+        }
+        return weight;
+    }
 }

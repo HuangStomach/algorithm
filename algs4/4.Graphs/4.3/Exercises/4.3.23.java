@@ -32,19 +32,19 @@ class VyssotskyMST {
             mst.addEdge(e);
             
             int v = e.either();
-            bfs(v, e.other(v), e.other(v));
+            dfs(v, e.other(v), e.other(v));
             set.add(max);
         }
     }
 
-    public boolean bfs(int start, int end, int skip) {
+    public boolean dfs(int start, int end, int skip) {
         for (Edge e: mst.adj(start)) {
             if (set.contains(e.weight())) continue;
 
             int v = e.other(start);
             if (v == skip) continue;
 
-            if (v == end || bfs(v, end, start)) {
+            if (v == end || dfs(v, end, start)) {
                 max = Math.max(max, e.weight());
                 return true;
             }

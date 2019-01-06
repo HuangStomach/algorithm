@@ -25,7 +25,7 @@ class DijkstraSP {
             if (distTo[w] > distTo[v] + e.weight()) {
                 distTo[w] = distTo[v] + e.weight();
                 edgeTo[w] = e;
-                if (pq.contains(w)) pq.change(w, distTo[w]);
+                if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
                 else pq.insert(w, distTo[w]);
             }
         }

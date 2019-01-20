@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-public class MSD {
+class MSD {
     private static int R = 256;
     private static final int M = 15;
     private static String[] aux;
@@ -19,6 +19,11 @@ public class MSD {
     private static void sort(String[] a, int lo, int hi, int d) {
         if (hi <= lo + M) {
             Insertion.sort(a, lo, hi);
+
+            for (int i = 0; i < a.length; i++) {
+                System.out.print(a[i] + " ");
+            }
+            System.out.println();
             return;
         }
 
@@ -39,8 +44,18 @@ public class MSD {
             a[i] = aux[i - lo];
         }
 
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+
         for (int r = 0; r < R; r++) {
             sort(a, lo + count[r], lo + count[r + 1] - 1, d + 1);
         }
+    }
+
+    public static void main(String[] args) {
+        String[] list = {"no", "is", "th", "ti", "fo", "al", "go", "pe", "to", "co", "to", "th", "ai", "of", "th", "pa"};
+        sort(list);
     }
 }

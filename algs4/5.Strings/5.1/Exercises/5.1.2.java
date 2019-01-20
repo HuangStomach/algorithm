@@ -6,26 +6,29 @@ class LSD {
         int R = 256;
         String[] aux = new String[N];
         for (int d = W - 1; d >= 0; d--) {
-            BST<Integer, Integer> bst = new BST<Character, Integer>();
+            int[] count = new int[R + 1];
             for (int i = 0; i < N; i++) {
-                int index = a[i].charAt(d) + 1;
-                if (bst.get(index) == null) bst.put(index, val);
-                else bst.put(index, bst.get(index));
+                count[a[i].charAt(d) + 1]++;
             }
 
             for (int r = 0; r < R; r++) {
-                bst.put(r + 1, bst.get(r) == null ? 0 : bst.get(r));
+                count[r + 1] += count[r];
             }
 
             for (int i = 0; i < N; i++) {
-                int index = bst.get(a[i].charAt(d) + 0) + 1;
-                bst.put(a[i].charAt(d) + 0, index);
-                aux[index] = a[i];
+                aux[count[a[i].charAt(d)]++] = a[i];
             }
 
             for (int i = 0; i < N; i++) {
                 a[i] = aux[i];
+                System.out.print(a[i] + " ");
             }
+            System.out.println();
         }
+    }
+
+    public static void main(String[] args) {
+        String[] list = {"no", "is", "th", "ti", "fo", "al", "go", "pe", "to", "co", "to", "th", "ai", "of", "th", "pa"};
+        sort(list, 2);
     }
 }

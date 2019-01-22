@@ -18,7 +18,7 @@ class MSD {
 
     private static void sort(String[] a, int lo, int hi, int d) {
         if (hi <= lo + M) {
-            Insertion.sort(a, lo, hi);
+            insertion.sort(a, lo, hi, d);
 
             for (int i = 0; i < a.length; i++) {
                 System.out.print(a[i] + " ");
@@ -53,9 +53,37 @@ class MSD {
             sort(a, lo + count[r], lo + count[r + 1] - 1, d + 1);
         }
     }
+    
+    private static void insertion(String[] a, int lo, int hi, int d) {
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && less(a[j], a[j - 1], d); j--) {
+                exch(a, j, j - 1);
+            }
+        }
+    }
+
+    private static void exch(String[] a, int i, int j) {
+        String temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    private static boolean less(String v, String w, int d) {
+        // assert v.substring(0, d).equals(w.substring(0, d));
+        for (int i = d; i < Math.min(v.length(), w.length()); i++) {
+            if (v.charAt(i) < w.charAt(i)) return true;
+            if (v.charAt(i) > w.charAt(i)) return false;
+        }
+        return v.length() < w.length();
+    }
 
     public static void main(String[] args) {
         String[] list = {"now", "is", "the", "time", "for", "all", "good", "people", "to", "come", "to", "the", "aid", "of"};
         sort(list);
+
+        for (int i = 0; i < list.length; i++) {
+            System.out.print(list[i] + " ");
+        }
+        System.out.println();
     }
 }

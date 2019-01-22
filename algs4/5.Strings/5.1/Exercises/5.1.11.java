@@ -1,9 +1,11 @@
+import java.util.Comparator;
+
 import edu.princeton.cs.algs4.*;
 
-public class MSD {
+class MSD {
     private static int R = 256;
-    private static final int M = 15;
-    private static String[] aux;
+    private static final int M = 3;
+    private static Queue<String>[] count;
 
     private static int charAt(String s, int d) {
         if (d < s.length()) return s.charAt(d);
@@ -12,7 +14,10 @@ public class MSD {
 
     public static void sort(String[] a) {
         int N = a.length;
-        aux = new String[N];
+        count = (Queue<String>[]) new Queue[R + 2];
+        for (int i = 0; i < R + 2; i++) {
+            count[i] = new Queue<String>();
+        }
         sort(a, 0, N - 1, 0);
     }
 
@@ -22,25 +27,20 @@ public class MSD {
             return;
         }
 
-        int[] count = new int[R + 2];
         for (int i = lo; i <= hi; i++) {
-            count[charAt(a[i], d) + 2]++;
+            int index = charAt(a[i], d) + 2;
+            count[index].enqueue(a[i]);
         }
+        
+        int i = lo;
+        for (int j = 0; j < count.length; j++) {
+            if (count[j].isEmpty()) continue;
 
-        for (int r = 0; r < R + 1; r++) {
-            count[r + 1] += count[r];
-        }
-
-        for (int i = lo; i <= hi; i++) {
-            aux[count[charAt(a[i], d) + 1]++] = a[i];
-        }
-
-        for (int i = lo; i < hi; i++) {
-            a[i] = aux[i - lo];
-        }
-
-        for (int r = 0; r < R; r++) {
-            sort(a, lo + count[r], lo + count[r + 1] - 1, d + 1);
+            int start = i;
+            while (!count[j].isEmpty()) {
+                a[i++] = count[j].dequeue();
+            }
+            sort(a, start, i - 1, d + 1);
         }
     }
     
@@ -65,5 +65,15 @@ public class MSD {
             if (v.charAt(i) > w.charAt(i)) return false;
         }
         return v.length() < w.length();
+    }
+
+    public static void main(String[] args) {
+        String[] list = {"now", "is", "the", "time", "for", "all", "good", "people", "to", "come", "to", "the", "aid", "of"};
+        sort(list);
+
+        for (int i = 0; i < list.length; i++) {
+            System.out.print(list[i] + " ");
+        }
+        System.out.println();
     }
 }

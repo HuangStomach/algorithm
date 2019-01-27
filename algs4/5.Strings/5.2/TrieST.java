@@ -36,4 +36,18 @@ public class TrieST<Value> {
         x.next[c] = put(x.next[c], key, val, d + 1);
         return x;
     }
+
+    public int size() {
+        return size(root);
+    }
+
+    private int size(Node x) {
+        if (x == null) return 0;
+        int cnt = 0;
+        if (x.val != null) cnt++;
+        for (char c = 0; c < R; c++) {
+            cnt += size(next[c]);
+        }
+        return cnt;
+    }
 }

@@ -67,6 +67,11 @@ public class TrieST<Value> {
         return q;
     }
 
+    public String longestPrefixOf(String s) {
+        int length = search(root, s, 0, 0);
+        return s.substring(0, length);
+    }
+
     private void collect(Node x, String pre, Queue<String> q) {
         if (x == null) return;
         if (x.val != null) q.enqueue(pre);
@@ -85,5 +90,13 @@ public class TrieST<Value> {
         for (char c = 0; c < R; c++) {
             if (next == '.' || next == c) collect(x.next[c], pre + c, pat, q);
         }
+    }
+
+    private int search(Node x, String s, int d, int length) {
+        if (x == null) return length;
+        if (x.val != null) length = d;
+        if (d == s.length()) return length;
+        char c = s.charAt(d);
+        return search(x.next[c], s, d + 1, length);
     }
 }

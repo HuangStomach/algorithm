@@ -85,13 +85,14 @@ class StringSET {
     }
 
     private boolean collect(Node x, StringBuilder prefix) {
-        if (x == null) return falses;
         if (x.val != null) return true;
         for (char c = 0; c < R; c++) {
             prefix.append(c);
-            return collect(x.next[c], prefix, results);
+            if (x.next[c] != null 
+            && collect(x.next[c], prefix, results)) return true;
             prefix.deleteCharAt(prefix.length() - 1);
         }
+        return false;
     }
 
     private void collect(Node x, String key, StringBuilder sb) {

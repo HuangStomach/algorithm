@@ -11,7 +11,7 @@ class Brute {
         int j, M = pat.length();
         int i, N = txt.length();
         for (i = 0, j = 0; i < N && j < M; i++) {
-            if (txt.charAt(i) == txt.charAt(j)) j++;
+            if (txt.charAt(i) == pat.charAt(j)) j++;
             else {
                 i -= j;
                 j = 0;
@@ -33,7 +33,7 @@ class Brute {
                 queue.enqueue(i - M);
             }
 
-            if (txt.charAt(i) == txt.charAt(j)) j++;
+            if (txt.charAt(i) == pat.charAt(j)) j++;
             else {
                 i -= j;
                 j = 0;
@@ -54,7 +54,7 @@ class Brute {
                 queue.enqueue(i - M);
             }
 
-            if (txt.charAt(i) == txt.charAt(j)) j++;
+            if (txt.charAt(i) == pat.charAt(j)) j++;
             else {
                 i -= j;
                 j = 0;

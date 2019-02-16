@@ -8,6 +8,7 @@ class Brute {
     }
 
     public int search(String txt) {
+        System.out.println(txt);
         int j, M = pat.length();
         int i, N = txt.length();
         for (i = 0, j = 0; i < N && j < M; i++) {
@@ -15,6 +16,10 @@ class Brute {
             else {
                 i -= j;
                 j = 0;
+                for (int k = 0; k < i; k++) {
+                    System.out.print(" ");
+                }
+                System.out.println(this.pat);
             }
         }
 
@@ -23,15 +28,9 @@ class Brute {
     }
 
     public static void main(String[] args) {
-        String pat = args[0];
-        String txt = args[1];
-        Brute brute = new Brute(pat);
-        System.out.println("text:    " + txt);
-        int offset = brute.search(txt);
-        System.out.print("pattern: ");
-        for (int i = 0; i < offset; i++) {
-            System.out.print(" ");
-        }
-        System.out.println(pat);
+        Brute brute = new Brute("AAAAAAAB");
+        brute.search("AAAAAAAAAAAAAAAAAAAAAAAAB");
+        brute = new Brute("ABABABAB");
+        brute.search("ABABABABAABABABABAAAAAAAA");
     }
 }

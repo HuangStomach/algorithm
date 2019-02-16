@@ -16,6 +16,13 @@ class KMP {
             dfa[pat.charAt(j)][j] = j + 1;
             X = dfa[pat.charAt(j)][X];
         }
+
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < M; j++) {
+                System.out.print(dfa[i][j]+ " ");
+            }
+            System.out.println();
+        }
     }
 
     public int search(String txt) {

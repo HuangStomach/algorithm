@@ -61,7 +61,7 @@ class RabinKarp {
         Queue<Integer> queue = new Queue<Integer>();
         int N = txt.length();
         long txtHash = hash(txt, M);
-        if (patHash == txtHash && check(txt, 0)) return 0;
+        if (patHash == txtHash && check(txt, 0)) queue.enqueue(0);
 
         for (int i = M; i < N; i++) {
             txtHash = (txtHash + Q - RM * txt.charAt(i - M) % Q) % Q;

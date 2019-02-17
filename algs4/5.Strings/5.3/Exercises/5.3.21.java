@@ -2,7 +2,6 @@ import edu.princeton.cs.algs4.*;
 
 class RabinKarp {
     private String pat;
-    private long patHash;
     private int M;
     private boolean[] patMatch;
     private long Q;

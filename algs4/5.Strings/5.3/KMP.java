@@ -51,7 +51,7 @@ class KMP {
         for (i = 0, j = 0; i < N; i++) {
             j = dfa[txt.charAt(i)][j];
             if (j == M) {
-                queue.enqueue(i);
+                queue.enqueue(i - M);
                 j = 0;
             }
         }

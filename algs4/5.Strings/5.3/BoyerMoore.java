@@ -24,7 +24,7 @@ class BoyerMoore {
         for (int i = 0; i <= N - M; i += skip) {
             skip = 0;
             for (int j = M - 1; j >= 0; j--) {
-                if (pat.charAt(j) != pat.charAt(i + j)) {
+                if (pat.charAt(j) != txt.charAt(i + j)) {
                     skip = j - right[txt.charAt(i + j)];
                     if (skip < 1) skip = 1;
                     break;
@@ -33,7 +33,7 @@ class BoyerMoore {
 
             if (skip == 0) return i;
         }
-        return M;
+        return N;
     }
 
     public int count(String txt) {
@@ -52,7 +52,7 @@ class BoyerMoore {
         for (int i = 0; i <= N - M; i += skip) {
             skip = 0;
             for (int j = M - 1; j >= 0; j--) {
-                if (pat.charAt(j) != pat.charAt(i + j)) {
+                if (pat.charAt(j) != txt.charAt(i + j)) {
                     skip = j - right[txt.charAt(i + j)];
                     if (skip < 1) skip = 1;
                     break;

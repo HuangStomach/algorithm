@@ -44,6 +44,21 @@ class Huffman {
         buildCode(st, x.right, s + '1');
     }
 
+    private static Node buildTrie(int[] freq) {
+        MinPQ<Node> pq = new MinPQ<Node>();
+        for (char c = 0; c < R; c++) {
+            if (freq[c] > 0) pq.insert(new Node(c, freq[c], null, null));
+        }
+
+        while (pq.size() > 1) {
+            Node x = pq.delMin();
+            Node y = pq.delMin();
+            Node parent = new Node('\0', x.freq + y.freq, x, y);
+            pq.insert(parent);
+        }
+        return pq.delMin();
+    }
+
     public static void expand() {
         Node root = readTrie();
         int N = BinaryStdIn.readInt();

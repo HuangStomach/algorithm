@@ -29,6 +29,21 @@ class Huffman {
         return new Node('\0', 0, readTrie(), readTrie());
     }
 
+    private static String[] buildCode(Node root) {
+        String[] st = new String[R];
+        buildCode(st, root, "");
+        return st;
+    }
+
+    private static void buildCode(String[] st, Node x, String s) {
+        if (x.isLeaf()) {
+            st[x.ch] = s;
+            return;
+        }
+        buildCode(st, x.left, s + '0');
+        buildCode(st, x.right, s + '1');
+    }
+
     public static void expand() {
         Node root = readTrie();
         int N = BinaryStdIn.readInt();

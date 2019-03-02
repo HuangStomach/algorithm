@@ -72,4 +72,8 @@ class Huffman {
         }
         BinaryStdOut.close();
     }
+    
+    public static void main(String[] args) {
+        
+    }
 }

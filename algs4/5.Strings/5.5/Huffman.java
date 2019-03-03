@@ -29,10 +29,15 @@ class Huffman {
         return new Node('\0', 0, readTrie(), readTrie());
     }
 
-    private static String[] buildCode(Node root) {
-        String[] st = new String[R];
-        buildCode(st, root, "");
-        return st;
+    private static void writeTrie(Ndoe x) {
+        if (x.isLeaf()) {
+            BinaryStdOut.write(true);
+            BinaryStdOut.write(x.ch);
+            return;
+        }
+        BinaryStdOut.write(false);
+        writeTrie(x.left);
+        writeTrie(x.right);
     }
 
     private static void buildCode(String[] st, Node x, String s) {
@@ -72,8 +77,33 @@ class Huffman {
         }
         BinaryStdOut.close();
     }
-    
+
+    public static void compress() {
+        String s = BinaryStdIn.readString();
+        char[] input = s.toCharArray();
+
+        int[] freq = new int[R];
+        for (int i = 0; i < input.length; i++) {
+            freq[input[i]]++;
+        }
+        Node root = buildTrie(freq);
+
+        String[] st = new String[R];
+        buildCode(st, root, "");
+
+        // 单纯为了输出 为单元测试使用 如果不输出则无法获取解码使用的单词表
+        writeTrie(root);
+        BinaryStdOut.write(intput.length);
+        for (int i = 0; i < input.length; i++) {
+            String code = st[input[i]];
+            for (int j = 0; j < code.length(); j++) {
+                BinaryStdOut.write(code.charAt(j) == "1"); 
+            }
+            BinaryStdOut.close();
+        }
+    }
     public static void main(String[] args) {
-        
+        if (args[0].equals("-")) compress();
+        if (args[0].equals("+")) expand();
     }
 }

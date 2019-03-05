@@ -27,4 +27,28 @@ class LZW {
         BinaryStdOut.write(R, W);
         BinaryStdOut.close();
     }
+
+    public static void expand() {
+        String[] st = new String[L];
+        int i;
+
+        for (i = 0; i < R; i++) {
+            st[i] = "" + (char)i;
+        }
+        st[i++] = " ";
+
+        int codeword = BinaryStdIn.readInt(W);
+        String val = st[codeword];
+        while (true) {
+            BinaryStdOut.write(val);
+            codeword = BinaryStdIn.readInt(W);
+            if (codeword == R) break;
+            String s = st[codeword];
+            if (i == codeword) s = val + val.charAt(0);
+            if (i < L) st[i++] = val + s.charAt(0);
+
+            val = s;
+        }
+        BinaryStdOut.close();
+    }
 }

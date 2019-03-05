@@ -51,4 +51,9 @@ class LZW {
         }
         BinaryStdOut.close();
     }
+    
+    public static void main(String[] args) {
+        if (args[0].equals("-")) compress();
+        if (args[0].equals("+")) expand();
+    }
 }

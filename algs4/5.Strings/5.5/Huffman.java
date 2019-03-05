@@ -29,7 +29,7 @@ class Huffman {
         return new Node('\0', 0, readTrie(), readTrie());
     }
 
-    private static void writeTrie(Ndoe x) {
+    private static void writeTrie(Node x) {
         if (x.isLeaf()) {
             BinaryStdOut.write(true);
             BinaryStdOut.write(x.ch);
@@ -93,11 +93,11 @@ class Huffman {
 
         // 单纯为了输出 为单元测试使用 如果不输出则无法获取解码使用的单词表
         writeTrie(root);
-        BinaryStdOut.write(intput.length);
+        BinaryStdOut.write(input.length);
         for (int i = 0; i < input.length; i++) {
             String code = st[input[i]];
             for (int j = 0; j < code.length(); j++) {
-                BinaryStdOut.write(code.charAt(j) == "1"); 
+                BinaryStdOut.write(code.charAt(j) == '1'); 
             }
             BinaryStdOut.close();
         }

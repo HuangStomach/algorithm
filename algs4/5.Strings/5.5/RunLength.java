@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-class Genome {
+class RunLength {
     public static void compress() {
         boolean b = false;
         while (!BinaryStdIn.isEmpty()) {

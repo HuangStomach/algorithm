@@ -7,8 +7,8 @@ class BinaryDump {
         for (cnt = 0; !BinaryStdIn.isEmpty(); cnt++) {
             if (width == 0) continue;
             if (cnt != 0 && cnt % width == 0) StdOut.println();
-            if (BinaryStdIn.readBoolean()) StdOut.println("1");
-            else StdOut.println("0");
+            if (BinaryStdIn.readBoolean()) StdOut.print("1");
+            else StdOut.print("0");
         }
         StdOut.println();
         StdOut.println(cnt + " bits");

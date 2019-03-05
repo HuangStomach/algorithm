@@ -1,0 +1,49 @@
+w 1
+g 1
+l 1
+n 1
+i 2
+t 2
+a 2
+h 2
+f 2
+e 3
+o 3
+space 4
+s 4
+
+1 1 1 1 2 2 2 2 2 3 3 4     4
+w g l n i t a h f e o space s
+
+1 1  2
+l n  @  ...
+    w g
+
+ 2   2
+ @   @  ...
+w g l n
+
+2 2 2 2 2 3 3    4
+i t a h f e o    @    ....
+               @   @
+              w g l n
+
+2 3 3   4    4     
+f e o   @    @   ...
+       i t  a h
+
+3   4   4      4        4    4   5
+o   @   @      @      space  s   @
+   i t a h   @   @              f e
+            w g l n
+
+
+...
+
+
+                    @
+        @                      @
+   @         @             @        @
+sp   s   @       @        f e    o     @
+       a   h   @    @                 i t
+              w g  l n

@@ -97,10 +97,11 @@ class Huffman {
         for (int i = 0; i < input.length; i++) {
             String code = st[input[i]];
             for (int j = 0; j < code.length(); j++) {
-                BinaryStdOut.write(code.charAt(j) == '1'); 
+                if (code.charAt(j) == '1') BinaryStdOut.write(true);
+                else BinaryStdOut.write(false); 
             }
-            BinaryStdOut.close();
         }
+        BinaryStdOut.close();
     }
     public static void main(String[] args) {
         if (args[0].equals("-")) compress();

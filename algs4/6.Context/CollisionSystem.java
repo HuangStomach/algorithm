@@ -33,6 +33,21 @@ class CollisionSystem {
         }
     }
 
+    public CollisionSystem(Particle[] particles) {
+        
+    }
+
+    public void redraw(double limit, double Hz) {
+        StdDraw.clear();
+        for (int i = 0; i < particles.length; i++) {
+            particles[i].draw();
+        }
+        StdDraw.show(20);
+        if (t < limit) {
+            pq.insert(new Event(t + 1.0 / Hz, null, null));
+        }
+    }
+
     private void predictCollisions(Particle a, double limit) {
         if (a == null) return;
         for (int i = 0; i < particles.length; i++) {
@@ -46,9 +61,26 @@ class CollisionSystem {
         if (t + dtX <= limit) {
             pq.insert(new Event(t + dtX, a, null));
         }
+
         double dtY = a.timeToHitHorizontalWall();
         if (t + dtY <= limit) {
             pq.insert(new Event(t + dtY, null, a));
         }
+    }
+
+    public void simulate(double limit, double Hz) {
+        
+    }
+
+    public static void main(String[] args) {
+        StdDraw.show(0);
+        int N = Integer.parseInt(args[0]);
+        Particle[] particles = new Particle[N];
+
+        for (int i = 0; i < N; i++) {
+            particles[i] = new Particle();
+        }
+        CollisionSystem system = new CollisionSystem(particles);
+        system.simulate(10000, 0.5);
     }
 }

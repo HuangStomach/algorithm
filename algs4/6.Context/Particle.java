@@ -1,4 +1,5 @@
 import java.awt.Color;
+import edu.princeton.cs.algs4.*;
 
 /**
  *  The {@code Particle} class represents a particle moving in the unit box,

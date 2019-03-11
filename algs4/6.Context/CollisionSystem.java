@@ -34,7 +34,7 @@ class CollisionSystem {
     }
 
     public CollisionSystem(Particle[] particles) {
-        
+        this.particles = particles;
     }
 
     public void redraw(double limit, double Hz) {
@@ -69,7 +69,28 @@ class CollisionSystem {
     }
 
     public void simulate(double limit, double Hz) {
-        
+        pq = new MinPQ<Event>();
+        for (int i = 0; i < particles.length; i++) {
+            predictCollisions(particles[i], limit);
+        }
+        pq.insert(new Event(0, null, null));
+        while (!pq.isEmpty()) {
+            Event event = pq.delMin();
+            if (!event.isValid()) continue;
+            for (int i = 0; i < particles.length; i++) {
+                particles[i].move(event.time - t);
+            }
+            t = event.time;
+            Particle a = event.a;
+            Particle b = event.b;
+
+            if (a != null && b != null) a.bounceOff(b);
+            else if (a != null && b == null) a.bounceOffVerticalWall();
+            else if (a == null && b != null) b.bounceOffHorizontalWall();
+            else if (a == null && b == null) redraw(limit, Hz);
+            predictCollisions(a, limit);
+            predictCollisions(b, limit);
+        }
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,9 @@
 import edu.princeton.cs.algs4.*;
 
 class CollisionSystem {
+    private MinPQ<Event> pq;
+    private double t = 0.0;
+    private Particle[] particles;
     private class Event implements Comparable<Event> {
         private final double time;
         private final Particle a, b;
@@ -27,6 +30,25 @@ class CollisionSystem {
             if (a != null && a.count() != countA) return false;
             if (b != null && b.count() != countB) return false;
             return true;
+        }
+    }
+
+    private void predictCollisions(Particle a, double limit) {
+        if (a == null) return;
+        for (int i = 0; i < particles.length; i++) {
+            double dt = a.timeToHit(particles[i]);
+            if (t + dt <= limit) {
+                pq.insert(new Event(t + dt, a, particles[i]));
+            }
+        }
+
+        double dtX = a.timeToHitVerticalWall();
+        if (t + dtX <= limit) {
+            pq.insert(new Event(t + dtX, a, null));
+        }
+        double dtY = a.timeToHitHorizontalWall();
+        if (t + dtY <= limit) {
+            pq.insert(new Event(t + dtY, null, a));
         }
     }
 }

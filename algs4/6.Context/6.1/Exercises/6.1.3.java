@@ -9,11 +9,13 @@ class CollisionSystem {
         private final double time;
         private final Particle a, b;
         private final int countA, countB;
+        private int type;
 
-        public Event(double t, Particle a, Particle b) {
+        public Event(double t, Particle a, Particle b, int type) {
             this.time = t;
             this.a = a;
             this.b = b;
+            this.type = type;
             if (a != null) countA = a.count();
             else countA = -1;
 
@@ -54,18 +56,23 @@ class CollisionSystem {
         for (int i = 0; i < particles.length; i++) {
             double dt = a.timeToHit(particles[i]);
             if (t + dt <= limit) {
-                pq.insert(new Event(t + dt, a, particles[i]));
+                pq.insert(new Event(t + dt, a, particles[i], 0));
             }
         }
 
-        double dtX = a.timeToHitVerticalWall();
+        double dtX = a.timeToHitXWall();
         if (t + dtX <= limit) {
-            pq.insert(new Event(t + dtX, a, null));
+            pq.insert(new Event(t + dtX, a, null, 1));
         }
 
-        double dtY = a.timeToHitHorizontalWall();
+        double dtY = a.timeToHitYWall();
         if (t + dtY <= limit) {
-            pq.insert(new Event(t + dtY, null, a));
+            pq.insert(new Event(t + dtY, a, null, 2));
+        }
+
+        double dtZ = a.timeToHitZWall();
+        if (t + dtZ <= limit) {
+            pq.insert(new Event(t + dtZ, a, null, 3));
         }
     }
 
@@ -82,12 +89,14 @@ class CollisionSystem {
                 particles[i].move(event.time - t);
             }
             t = event.time;
+            type = event.type;
             Particle a = event.a;
             Particle b = event.b;
 
             if (a != null && b != null) a.bounceOff(b);
-            else if (a != null && b == null) a.bounceOffVerticalWall();
-            else if (a == null && b != null) b.bounceOffHorizontalWall();
+            else if (a != null && type == 1) a.bounceOffXWall();
+            else if (a != null && type == 2) a.bounceOffYWall();
+            else if (a != null && type == 3) a.bounceOffZWall();
             else if (a == null && b == null) redraw(limit, Hz);
             predictCollisions(a, limit);
             predictCollisions(b, limit);
@@ -96,7 +105,7 @@ class CollisionSystem {
 
     public static void main(String[] args) {
         StdDraw.show(0);
-        int N = Integer.parseInt(args[0]);
+        int N = Integer.parseInt(args[0] ? args[0] : 10);
         Particle[] particles = new Particle[N];
 
         for (int i = 0; i < N; i++) {
@@ -110,41 +119,46 @@ class CollisionSystem {
 class Particle {
     private static final double INFINITY = Double.POSITIVE_INFINITY;
 
-    private double rx, ry;        // position
-    private double vx, vy;        // velocity
-    private int count;            // number of collisions so far
-    private final double radius;  // radius
-    private final double mass;    // mass
-    private final Color color;    // color
+    private double rx, ry, rz; // position
+    private double vx, vy, vz; // velocity
+    private int count; // number of collisions so far
+    private final double radius; // radius
+    private final double mass; // mass
+    private final Color color; // color
 
-    public Particle(double rx, double ry, double vx, double vy, double radius, double mass, Color color) {
+    public Particle(double rx, double ry, double rz, double vx, double vy, double vz, double radius, double mass, Color color) {
         this.vx = vx;
         this.vy = vy;
+        this.vz = vz;
         this.rx = rx;
         this.ry = ry;
+        this.rz = rz;
         this.radius = radius;
         this.mass   = mass;
         this.color  = color;
     }
 
     public Particle() {
-        rx     = StdRandom.uniform(0.0, 1.0);
-        ry     = StdRandom.uniform(0.0, 1.0);
-        vx     = StdRandom.uniform(-0.005, 0.005);
-        vy     = StdRandom.uniform(-0.005, 0.005);
+        rx = StdRandom.uniform(0.0, 1.0);
+        ry = StdRandom.uniform(0.0, 1.0);
+        rz = StdRandom.uniform(0.0, 1.0);
+        vx = StdRandom.uniform(-0.005, 0.005);
+        vy = StdRandom.uniform(-0.005, 0.005);
+        vz = StdRandom.uniform(-0.005, 0.005);
         radius = 0.02;
-        mass   = 0.5;
-        color  = Color.BLACK;
+        mass = 0.5;
+        color = Color.BLACK;
     }
 
     public void move(double dt) {
         rx += vx * dt;
         ry += vy * dt;
+        rz += vz * dt;
     }
 
     public void draw() {
         StdDraw.setPenColor(color);
-        StdDraw.filledCircle(rx, ry, radius);
+        StdDraw.filledCircle(rx, ry, rz); // 将z轴高度当做点的大小
     }
 
     public int count() {
@@ -155,38 +169,48 @@ class Particle {
         if (this == that) return INFINITY;
         double dx  = that.rx - this.rx;
         double dy  = that.ry - this.ry;
+        double dz  = that.rz - this.rz;
         double dvx = that.vx - this.vx;
         double dvy = that.vy - this.vy;
-        double dvdr = dx*dvx + dy*dvy;
+        double dvz = that.vy - this.vz;
+        double dvdr = dx * dvx + dy * dvy + dz * dvz;
         if (dvdr > 0) return INFINITY;
-        double dvdv = dvx*dvx + dvy*dvy;
+        double dvdv = dvx * dvx + dvy * dvy + dvz * dvz;
         if (dvdv == 0) return INFINITY;
-        double drdr = dx*dx + dy*dy;
+        double drdr = dx * dx + dy * dy + dz * dz;
         double sigma = this.radius + that.radius;
-        double d = (dvdr*dvdr) - dvdv * (drdr - sigma*sigma);
-        // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
+        double d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
+        
         if (d < 0) return INFINITY;
         return -(dvdr + Math.sqrt(d)) / dvdv;
     }
 
-    public double timeToHitVerticalWall() {
-        if      (vx > 0) return (1.0 - rx - radius) / vx;
+    public double timeToHitXWall() {
+        if (vx > 0) return (1.0 - rx - radius) / vx;
         else if (vx < 0) return (radius - rx) / vx;  
-        else             return INFINITY;
+        else return INFINITY;
     }
 
-    public double timeToHitHorizontalWall() {
-        if      (vy > 0) return (1.0 - ry - radius) / vy;
+    public double timeToHitYWall() {
+        if (vy > 0) return (1.0 - ry - radius) / vy;
         else if (vy < 0) return (radius - ry) / vy;
-        else             return INFINITY;
+        else return INFINITY;
+    }
+
+    public double timeToHitZWall() {
+        if (vz > 0) return (1.0 - rz - radius) / vz;
+        else if (vz < 0) return (radius - rz) / vz;
+        else return INFINITY;
     }
 
     public void bounceOff(Particle that) {
         double dx  = that.rx - this.rx;
         double dy  = that.ry - this.ry;
+        double dz  = that.rz - this.rz;
         double dvx = that.vx - this.vx;
         double dvy = that.vy - this.vy;
-        double dvdr = dx*dvx + dy*dvy;             // dv dot dr
+        double dvz = that.vz - this.vz;
+        double dvdr = dz * dvz + dy * dvy + dz * dvz;// dv dot dr
         double dist = this.radius + that.radius;   // distance between particle centers at collison
 
         // magnitude of normal force
@@ -195,29 +219,37 @@ class Particle {
         // normal force, and in x and y directions
         double fx = magnitude * dx / dist;
         double fy = magnitude * dy / dist;
+        double fz = magnitude * dz / dist;
 
         // update velocities according to normal force
         this.vx += fx / this.mass;
         this.vy += fy / this.mass;
+        this.vz += fz / this.mass;
         that.vx -= fx / that.mass;
         that.vy -= fy / that.mass;
+        that.vz -= fz / that.mass;
 
         // update collision counts
         this.count++;
         that.count++;
     }
 
-    public void bounceOffVerticalWall() {
+    public void bounceOffXWall() {
         vx = -vx;
         count++;
     }
 
-    public void bounceOffHorizontalWall() {
+    public void bounceOffYWall() {
         vy = -vy;
         count++;
     }
 
+    public void bounceOffZWall() {
+        vz = -vz;
+        count++;
+    }
+
     public double kineticEnergy() {
-        return 0.5 * mass * (vx*vx + vy*vy);
+        return 0.5 * mass * (vx * vx + vy * vy + vz * vz);
     }
 }

@@ -16,12 +16,40 @@ public class Solution {
         ListNode A = headA;
         ListNode B = headB;
 
-        while (A != B) {
-            if (A == null) A = headA;
-            else A = A.next;
-            if (B == null) B = headB;
-            else B = B.next;
+        int a = 0;
+        while (A != null) {
+            A = A.next;
+            a++;
         }
-        return A;
+
+        int b = 0;
+        while (B != null) {
+            B = B.next;
+            b++;
+        }
+
+        if (b > a) {
+            int c = b - a;
+            for (int i = 0; i < c; i++) {
+                ListNode C = new ListNode(0);
+                C.next = headA;
+                headA = C;
+            }
+        }
+        else {
+            int c = a - b;
+            for (int i = 0; i < c; i++) {
+                ListNode C = new ListNode(0);
+                C.next = headB;
+                headB = C;
+            }
+        }
+
+        while (headA != null) {
+            if (headA == headB) return headA;
+            headA = headA.next;
+            headB = headB.next;
+        }
+        return null;
     }
 }

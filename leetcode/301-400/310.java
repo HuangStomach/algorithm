@@ -4,6 +4,7 @@
  */
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
 
 class Solution {
     private boolean[][] graph;
@@ -27,31 +28,31 @@ class Solution {
             e[b]++;
             
         }
+        //遍历图,找到最外层节点
+        for (int i = 0; i < e.length; i++) {
+            if (e[i] == 1) queue.add(i);
+        }
 
         //去除最外层的节点
-        while (n > 2){
-            //遍历图,找到最外层节点
-            for (int i = 0; i < e.length; i++) {
-                if (e[i] == 1) queue.add(i);
-            }
-
-            while (!queue.isEmpty()) {
+        while (n > 2 && !queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
                 int v = queue.poll();
                 e[v]--;
                 n--;
                 visited[v] = true;
-                for (int i = 0; i < graph[v].length; i++){
-                    if (graph[v][i]) {
-                        e[i]--;
-                        graph[v][i] = false;
-                        graph[i][v] = false;
+                for (int j = 0; j < graph[v].length; j++) {
+                    if (graph[v][j]) {
+                        if (--e[j] == 1) queue.add(j);
+                        graph[v][j] = false;
+                        graph[j][v] = false;
                     }
                 }
-            }            
+            }
         } 
 
         List<Integer> rt = new ArrayList<>();
-        for (int i = 0;i < visited.length; i++) {
+        for (int i = 0; i < visited.length; i++) {
             if (!visited[i]) rt.add(i);
         }
         return rt;

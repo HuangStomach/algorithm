@@ -1,33 +1,35 @@
-// TODO: 43
+/**
+ * 字符串相乘
+ * 给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
+ */
 class Solution {
-    public static String multiply(String num1, String num2) {
-        String big;
-        String small;
-        if (num1.length() > num2.length()) {
-            big = num1;
-            small = num2;
-        }
-        else {
-            big = num2;
-            small = num1;
-        }
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) return "0";
+        int l1 = num1.length();
+        int l2 = num2.length();
+        int l = l1 + l2; // 最大可能长度
+        char[] ans = new char[l];
 
-        long result = 0;
-        for (int i = 0; i < small.length(); i++) {
-            for (int j = 0; j < big.length(); j++) {
-                int unit = (int)Math.pow(10, (i + j));
-                long product = (long)(small.charAt(small.length() - i - 1) - '0') 
-                * (long)(big.charAt(big.length() - j - 1) - '0') * unit;
-                System.out.println(unit);
-                System.out.println(product);
-                result += product;
+        char[] c1 = num1.toCharArray();
+        char[] c2 = num2.toCharArray();
+        for (int i = l1 - 1; i >= 0; i--) {
+            int c = c1[i] - '0';
+            for (int j = l2 - 1; j >= 0; j--) {
+                ans[i + j + 1] +=  c * (c2[j] - '0');
             }
         }
-        System.out.println(result);
-        return Long.toString(result);
-    }
 
-    public static void main(String[] args) {
-        multiply("123", "456");
+        for (int i = l - 1; i > 0; --i) {
+            if (ans[i] > 9) {
+                ans[i - 1] += ans[i] / 10;
+                ans[i] %= 10;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        for (; ; i++) if (ans[i] != 0) break;
+        for (; i < ans.length; i++) sb.append((char) (ans[i] + '0'));
+        return sb.toString();
     }
 }

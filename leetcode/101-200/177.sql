@@ -2,13 +2,15 @@
 -- 编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。
 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
 BEGIN
+  SET N = N - 1;
   RETURN (
-    SELECT (
-      IF (
-        (SELECT COUNT(*) FROM (SELECT DISTINCT e.Salary FROM Employee e) e) >= N,
-        (SELECT MIN(e.Salary) FROM (SELECT DISTINCT e.Salary FROM Employee e ORDER BY e.Salary desc LIMIT N) e), 
-        NULL
-      )
-    )
+    SELECT
+      IFNULL(
+        (SELECT DISTINCT Salary AS NthHighestSalary
+        FROM Employee
+        ORDER BY Salary DESC
+        LIMIT 1 OFFSET N),
+      NULL) 
+      AS NthHighestSalary
   );
 END

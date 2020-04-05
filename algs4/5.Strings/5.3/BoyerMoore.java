@@ -59,7 +59,10 @@ class BoyerMoore {
                 }
             }
 
-            if (skip == 0) queue.enqueue(i);
+            if (skip == 0) {
+                skip = 1;
+                queue.enqueue(i);
+            }
         }
         return queue;
     } 
@@ -69,11 +72,21 @@ class BoyerMoore {
         String txt = args[1];
         BoyerMoore boyerMoore = new BoyerMoore(pat);
         System.out.println("text:    " + txt);
+
         int offset = boyerMoore.search(txt);
         System.out.print("pattern: ");
         for (int i = 0; i < offset; i++) {
             System.out.print(" ");
         }
         System.out.println(pat);
+
+        System.out.print("pattern: ");
+        for (int j : boyerMoore.searchAll(txt)) {
+            for (int i = 0; i < j; i++) {
+                System.out.print(" ");
+            }
+            System.out.print(pat);
+        }
+        System.out.println();
     }
 }

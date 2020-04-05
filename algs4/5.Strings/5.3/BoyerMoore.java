@@ -82,6 +82,7 @@ class BoyerMoore {
 
         System.out.print("pattern: ");
         for (int j : boyerMoore.searchAll(txt)) {
+            if (j > 0) j -= pat.length();
             for (int i = 0; i < j; i++) {
                 System.out.print(" ");
             }

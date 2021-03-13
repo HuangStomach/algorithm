@@ -1,6 +1,6 @@
-> 个人练习 以及一些算法第四版和leetcode的题目解答
+> 个人练习 以及一些算法第四版的题目解答
 >
-> Self Practice & Some solutions to problems in Algorithms 4th edition and Leetcode
+> Self Practice & Some solutions to problems in Algorithms 4th edition
 
 ## Todo List
 
